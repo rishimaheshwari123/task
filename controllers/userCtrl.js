@@ -42,7 +42,7 @@ const loginController = async (req, res) => {
         //         .status(200)
         //         .send({ message: "Invlid EMail or Password", success: false });
         // }
-        const isMatch = await findOne({ name: req.body.name });
+        const isMatch = await userModel.findOne({ name: req.body.name });
         if (!isMatch) {
             return res
                 .status(200)

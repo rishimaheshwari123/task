@@ -36,11 +36,17 @@ const loginController = async (req, res) => {
                 .status(200)
                 .send({ message: "user not found", success: false });
         }
-        const isMatch = await bcrypt.compare(req.body.password, user.password);
+        // const isMatch = await bcrypt.compare(req.body.password, user.password);
+        // if (!isMatch) {
+        //     return res
+        //         .status(200)
+        //         .send({ message: "Invlid EMail or Password", success: false });
+        // }
+        const isMatch = await userModel.findOne({ name: req.body.name });
         if (!isMatch) {
             return res
                 .status(200)
-                .send({ message: "Invlid EMail or Password", success: false });
+                .send({ message: "Invlid EMail or Name", success: false });
         }
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
             expiresIn: "1d",
